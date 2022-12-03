@@ -9,20 +9,10 @@
     justify-content: center;
     color: Black;
     background-color: #bedada;
-    /* background-image: linear-gradient(79deg, #7439db, #C66FBC 48%, #F7944D); */
     font-family: 'Lora', serif;
     font-weight: bold;
     letter-spacing: 2px;
 }
-
-
-/* .appbar {
-    height: 50px;
-    margin-bottom: 20px;
-    padding: auto;
-    font-family: 'McLaren', cursive;
-    font-family: 'Josefin Sans', sans-serif;
-} */
 
 .auth-form-container,
 .login-form,
@@ -33,9 +23,7 @@
 
 .title-name {
     font-family: 'Josefin Sans', sans-serif;
-    font-size: 25px;
-    padding: 0px;
-    margin: 0;
+    font-size: 23px;
 }
 
 @media screen and (min-width: 600px) {
@@ -70,7 +58,6 @@ button {
 
 .link-btn {
     background: none;
-    /* color: #5b8686; */
     color: black;
     text-decoration: underline;
     font-family: 'Josefin Sans', sans-serif;
@@ -87,16 +74,18 @@ button {
     margin-top: 10px;
 }
 
-
-/* input[type="file"] {
-    display: none;
-} */
+.extension {
+    color: rgb(61, 58, 58);
+}
 
 .custom-file-upload {
     border: 1px solid #5b8686;
     padding-left: 12%;
     display: block;
     margin-bottom: 5%;
-    /* box-shadow: 0px 5px 5px #fffaff; */
     cursor: pointer;
+}
+
+.icon {
+    padding-right: 1rem;
 }

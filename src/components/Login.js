@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 
 const Login = (props) => {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
 
   const handleSubmit = (e) => {
@@ -14,11 +15,21 @@ const Login = (props) => {
       <form className="login-form" onSubmit={handleSubmit}>
         <label htmlFor="username"> Username </label>{" "}
         <input
+          type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="abc123"
           id="username"
           name="username"
+        />
+        <label htmlFor="exampleInputEmail">Email address</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="username123@gmail.com"
+          id="email"
+          name="email"
         />
         <label htmlFor="password"> Password </label>{" "}
         <input

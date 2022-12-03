@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 
 const Register = (props) => {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
@@ -29,6 +30,15 @@ const Register = (props) => {
           id="lname"
           placeholder="last name"
         />
+        <label htmlFor="exampleInputEmail">Email address</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="username123@gmail.com"
+          id="email"
+          name="email"
+        />
         <label htmlFor="username"> Username </label>{" "}
         <input
           value={username}
@@ -46,7 +56,6 @@ const Register = (props) => {
           id="password"
           name="password"
         />{" "}
-        {/* <button type="submit">Register</button> */}{" "}
         <div className="button-div">
           <Button
             fullWidth

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { BrowserRouter, Route, Switch, Routes, Router } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import MainPage from "./components/MainPage";
+import DownloadPage from "./components/DownloadPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
           <Route exact path="/main" element={<MainPage />}></Route>
+          <Route exact path="/download" element={<DownloadPage />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
