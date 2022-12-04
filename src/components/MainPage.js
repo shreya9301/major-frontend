@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import axios from "axios";
 import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import { checkFile } from '../services/list';
+import { Navigate, useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -16,42 +18,64 @@ const style = {
   boxShadow: "rgba(0, 0, 0, 0.35) 0px 15px 25px",
   p: 4,
 };
-
 const MainPage = () => {
   const [file, setFile] = useState();
   const [disabled, setDisabled] = useState(false);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [status,setStatus] = useState(null);
+  const navigate = useNavigate();
+
   const handleClose = () => setOpen(false);
+
+
+
+  
+
+   useEffect(() => {
+    let formData = new FormData();
+    formData.append('username', localStorage.getItem('username'));
+    fetch('http://localhost:8000/checkfile/',{method:"POST",body:formData})
+    .then(response => {
+      setStatus(response.status);
+      console.log(response.status);
+    }
+    )
+    // .then(data => {
+    //   setStatus(data.status);
+    //   console.log(data);
+    // }
+    // );
+   },[]);
 
   function handleChange(event) {
     setFile(event.target.files[0]);
     var fileName = document.getElementById("file").value.toLowerCase();
-    if (fileName.endsWith(".xls") || fileName.endsWith(".xlsx")) {
+    if (fileName.endsWith(".csv")) {
       setDisabled(false);
     }
-  }
+  };
 
   function handleClick(event) {
     event.preventDefault();
     var fileName = document.getElementById("file").value.toLowerCase();
 
-    if (!fileName.endsWith(".xls") && !fileName.endsWith(".xlsx")) {
+    if (!fileName.endsWith(".csv")) {
       console.log(fileName);
-      alert("You can upload xls or xlsx files only.");
+      alert("You can upload csv files only.");
       setDisabled(true);
       return false;
     } else {
       setOpen(true);
       setDisabled(false);
     }
-  }
+  };
 
   function handleSubmit(event) {
     event.preventDefault();
-    const url = "http://localhost:3000/uploadFile";
+    const url = "http://localhost:8000/upload/";
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("fileName", file.name);
+    formData.append("gene_file", file);
+    formData.append("username", localStorage.getItem('username'));
     const config = {
       headers: {
         "content-type": "multipart/form-data",
@@ -60,21 +84,22 @@ const MainPage = () => {
     axios.post(url, formData, config).then((response) => {
       console.log(response.data);
     });
-  }
+  };
 
   return (
     <div>
+      {status == "200" ? navigate("/download") : null}
       <form onSubmit={handleSubmit}>
-        <h1>Hello username</h1>
+        <h1>Hello {localStorage.getItem('username')} 👋 ! </h1>
         <h1>Upload your dataset below</h1>
-        <h4 className="extension">Only .xls and .xlsx files are allowed</h4>
+        <h4 className="extension">Only .csv files are allowed</h4>
 
         <div className="custom-file-upload">
           <label>
             <input
               type="file"
               id="file"
-              accept=".xls,.xlsx"
+              accept=".csv"
               onChange={handleChange}
             />
           </label>
@@ -96,7 +121,7 @@ const MainPage = () => {
               background: "#63a5a5",
             },
           }}
-          onClick={handleClick}
+           onClick={handleClick}
         >
           UPLOAD{" "}
         </Button>

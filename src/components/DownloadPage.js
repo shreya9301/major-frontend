@@ -1,7 +1,9 @@
 import React from "react";
+import axios from 'axios'
 import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import { FaDownload } from "react-icons/fa";
+import { fileDownload } from 'js-file-download';
 
 const style = {
   position: "absolute",
@@ -16,6 +18,42 @@ const style = {
 };
 
 const DownloadPage = () => {
+  let username = localStorage.getItem('username');
+  const url = "http://127.0.0.1:8000/download/" + username + "/";
+  function handleDownload(url, filename) {
+    console.log(url);
+    axios.get(url, {
+        responseType: 'blob',
+    })
+    .then((res) => {
+      const href = URL.createObjectURL(res.data);
+
+    // create "a" HTML element with href to file & click
+      const link = document.createElement('a');
+      link.href = href;
+      link.setAttribute('download', filename); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+
+      // clean up "a" element & remove ObjectURL
+      document.body.removeChild(link);
+      URL.revokeObjectURL(href);
+    })
+  };
+  // function handleDownload(username, filename) {
+  //   fetch(`http://127.0.0.1:8000/download/${localStorage.getItem('username')}/`).then(
+  //     response => {
+  //       response.blob().then(blob => {
+  //       let url = window.URL.createObjectURL(blob);
+  //       let a = document.createElement("a");
+  //       console.log(url);
+  //       a.href = url;
+  //       a.download = filename;
+  //       a.click();
+  //     });
+  //   });
+  // };
+
   return (
     <div>
       <Box sx={style}>
@@ -23,6 +61,7 @@ const DownloadPage = () => {
         <h2>You can now download the results.</h2>
         <div className="button-div">
           <Button
+            onClick={() => {handleDownload(url, 'result.csv')}}
             fullWidth
             variant="contained"
             type="submit"

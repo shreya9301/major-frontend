@@ -1,9 +1,22 @@
+import React, {useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
+import AuthContext from "../AuthProvider";
 
 const Header = () => {
+  let navigate = useNavigate();
+  let {user, logoutUser} = useContext(AuthContext)
+
+  function handleLogout(event) {
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
+    localStorage.removeItem('username')
+    navigate('/login');
+  }
+
   return (
     <AppBar
       position="fixed"
@@ -36,7 +49,10 @@ const Header = () => {
             >
               {window.location.pathname === "/main" ||
               window.location.pathname === "/download" ? (
-                <Button color="inherit"> Logout</Button>
+                <div>
+                  {user &&   <p>Hello {user.username}</p>}
+                  <Button color="inherit" onClick={handleLogout}> Logout</Button>
+                </div>
               ) : null}
             </div>
           </Grid>

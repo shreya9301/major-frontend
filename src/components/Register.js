@@ -1,15 +1,50 @@
 import React, { useState } from "react";
+//import axiosInstance from "../axios";
+import axios from "../axios";
+
+import  { useNavigate } from 'react-router-dom';
 import { Button } from "@mui/material";
 
-const Register = (props) => {
+
+const REGISTER_URL = "/register/";
+
+export default function Register(props) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
-  const handleSubmit = (e) => {
+
+  const navigate = useNavigate();
+
+
+  // const handleChange = (e) => {
+	// 	updateFormData({
+	// 		...formData,
+	// 		// Trimming any whitespace
+	// 		[e.target.name]: e.target.value.trim(),
+	// 	});
+	// };
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(username);
+
+      const response = await axios.post(
+        REGISTER_URL,
+        JSON.stringify({ fname,lname,email,username,pass }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+
+      //clear state and controlled inputs
+      setUsername("");
+      setPass("");
+      setFname("");
+      setLname("");
+      setEmail("");
   };
   return (
     <div className="auth-form-container">
@@ -21,6 +56,7 @@ const Register = (props) => {
           name="fname"
           id="fname"
           placeholder="first name"
+
         />
         <label htmlFor="lname"> Last Name </label>{" "}
         <input
@@ -29,6 +65,7 @@ const Register = (props) => {
           name="lname"
           id="lname"
           placeholder="last name"
+
         />
         <label htmlFor="exampleInputEmail">Email address</label>
         <input
@@ -38,6 +75,7 @@ const Register = (props) => {
           placeholder="username123@gmail.com"
           id="email"
           name="email"
+
         />
         <label htmlFor="username"> Username </label>{" "}
         <input
@@ -46,6 +84,7 @@ const Register = (props) => {
           placeholder="abc123"
           id="username"
           name="username"
+
         />
         <label htmlFor="password"> Password </label>{" "}
         <input
@@ -55,6 +94,7 @@ const Register = (props) => {
           placeholder="********"
           id="password"
           name="password"
+
         />{" "}
         <div className="button-div">
           <Button
@@ -71,6 +111,7 @@ const Register = (props) => {
                 background: "#63a5a5",
               },
             }}
+            onClick = {handleSubmit}
           >
             Sign Up{" "}
           </Button>{" "}
@@ -82,5 +123,3 @@ const Register = (props) => {
     </div>
   );
 };
-
-export default Register;
