@@ -89,7 +89,7 @@ const MainPage = () => {
     <div>
       {status == "200" ? navigate("/download") : null}
       <form>
-        <h1>Hello {localStorage.getItem('username')} 👋</h1>
+        <h1>Hello <span style={{color: "red"}}>{localStorage.getItem('username')} 👋</span></h1>
         <h2>Upload your dataset below</h2>
         <h4 className="extension">Only .csv files are allowed</h4>
 
