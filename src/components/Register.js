@@ -6,14 +6,14 @@ import  { useNavigate } from 'react-router-dom';
 import { Button } from "@mui/material";
 
 
-const REGISTER_URL = "/register/";
+const REGISTER_URL = "register/";
 
 export default function Register(props) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
+  const [password, setPass] = useState("");
+  const [first_name, setFname] = useState("");
+  const [last_name, setLname] = useState("");
 
   const navigate = useNavigate();
 
@@ -32,26 +32,33 @@ export default function Register(props) {
 
       const response = await axios.post(
         REGISTER_URL,
-        JSON.stringify({ fname,lname,email,username,pass }),
+        JSON.stringify({ first_name,last_name,email,username,password }),
         {
-          headers: { "Content-Type": "application/json" },
+          // headers: { "Content-Type": "Multipart/form-data " },
           withCredentials: true,
         }
       );
 
+      // const data = response.json();
+      console.log(response);
+      // console.log(data);
+      //console.log(fname);
+      //console.log(email);
       //clear state and controlled inputs
+      localStorage.setItem("username", username);
       setUsername("");
       setPass("");
       setFname("");
       setLname("");
       setEmail("");
+      navigate("/main");
   };
   return (
     <div className="auth-form-container">
       <form className="register-form" onSubmit={handleSubmit}>
         <label htmlFor="fname"> First Name </label>{" "}
         <input
-          value={fname}
+          value={first_name}
           onChange={(e) => setFname(e.target.value)}
           name="fname"
           id="fname"
@@ -60,7 +67,7 @@ export default function Register(props) {
         />
         <label htmlFor="lname"> Last Name </label>{" "}
         <input
-          value={lname}
+          value={last_name}
           onChange={(e) => setLname(e.target.value)}
           name="lname"
           id="lname"
@@ -88,7 +95,7 @@ export default function Register(props) {
         />
         <label htmlFor="password"> Password </label>{" "}
         <input
-          value={pass}
+          value={password}
           onChange={(e) => setPass(e.target.value)}
           type="password"
           placeholder="********"

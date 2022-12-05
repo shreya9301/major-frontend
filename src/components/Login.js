@@ -13,7 +13,7 @@ const Login = (props) => {
   const [pass, setPass] = useState("");
 
   let navigate = useNavigate();
-
+  
   //let { loginUser } = useContext(AuthContext);
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -98,6 +98,8 @@ const Login = (props) => {
             localStorage.setItem('username', username)
             // localStorage.setItem('isLoggedin',true )
             //setLoggedin(true)
+          
+            // console.log(isLoggedin)
             navigate("/main");
 
           });

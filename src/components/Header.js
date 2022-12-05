@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import AuthContext from "../AuthProvider";
 
-const Header = () => {
+const Header = (props) => {
   let navigate = useNavigate();
   let {user, logoutUser} = useContext(AuthContext)
 
@@ -14,7 +14,8 @@ const Header = () => {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
     localStorage.removeItem('username')
-    navigate('/login');
+    
+    navigate('/');
   }
 
   return (

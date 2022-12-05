@@ -1,4 +1,6 @@
 import React from "react";
+import Lottie from "react-lottie";
+import Success from "./success.json";
 import axios from 'axios'
 import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -18,6 +20,7 @@ const style = {
 };
 
 const DownloadPage = () => {
+
   let username = localStorage.getItem('username');
   const url = "http://127.0.0.1:8000/download/" + username + "/";
   function handleDownload(url, filename) {
@@ -28,37 +31,38 @@ const DownloadPage = () => {
     .then((res) => {
       const href = URL.createObjectURL(res.data);
 
-    // create "a" HTML element with href to file & click
       const link = document.createElement('a');
       link.href = href;
       link.setAttribute('download', filename); //or any other extension
       document.body.appendChild(link);
       link.click();
 
-      // clean up "a" element & remove ObjectURL
       document.body.removeChild(link);
       URL.revokeObjectURL(href);
     })
   };
-  // function handleDownload(username, filename) {
-  //   fetch(`http://127.0.0.1:8000/download/${localStorage.getItem('username')}/`).then(
-  //     response => {
-  //       response.blob().then(blob => {
-  //       let url = window.URL.createObjectURL(blob);
-  //       let a = document.createElement("a");
-  //       console.log(url);
-  //       a.href = url;
-  //       a.download = filename;
-  //       a.click();
-  //     });
-  //   });
-  // };
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: Success,
+        renderSettings: {
+        preserveAspectRatio: "xMidYMid slice",
+      },
+    };
+
 
   return (
     <div>
       <Box sx={style}>
         <h1>Processing completed!</h1>
-        <h2>You can now download the results.</h2>
+        <div>
+          <Lottie 
+            options={defaultOptions}
+            height={120}
+            width={120}
+          />
+        </div>
+        <h3>You can now download the results.</h3>
         <div className="button-div">
           <Button
             onClick={() => {handleDownload(url, 'result.csv')}}
